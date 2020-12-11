@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
 
-import javax.servlet.http.HttpSession;
-
 @RequiredArgsConstructor
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
@@ -34,11 +32,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         String  registrationId = userRequest.getClientRegistration().getRegistrationId();
         // OAuth2 로그인 진행 시 키가 되는 필드값
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
-        // OAuth2UserService를 통해 가져원 OAuth2User의 attribute를 담을 클래스
+        // OAuth2UserService를 통해 가져온 OAuth2User의 attribute를 담을 클래스
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         // 세션에 사용자 정보를 저장하기 위한 Dto 클래스
         User user = saveOrUpdate(attributes);
-        //
         httpSession.setAttribute("user", new SessionUser(user));
 
         return new DefaultOAuth2User(

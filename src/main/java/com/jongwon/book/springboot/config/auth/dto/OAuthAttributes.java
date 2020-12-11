@@ -24,16 +24,17 @@ public class OAuthAttributes {
         this.picture = picture;
     }
     // OAuth2User에서 반환하는 사용자 정보는 Map이기 때문에 값 하나하나를 변환해야 한다.
-    public static OAuthAttributes of(String registrationId, String userNameAttributName, Map<String, Object> attributes) {
-        return ofGoogle(userNameAttributName, attributes);
+    public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+        return ofGoogle(userNameAttributeName, attributes);
     }
 
-    private static OAuthAttributes ofGoogle(String userNameAttributName, Map<String, Object> attributes) {
+    private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
         return OAuthAttributes.builder()
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 .picture((String) attributes.get("picture"))
-                .nameAttributeKey(userNameAttributName)
+                .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
                 .build();
     }
     // User 엔티티를 생성
